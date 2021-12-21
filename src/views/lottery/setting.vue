@@ -17,8 +17,8 @@
         <el-table-column prop="count" label="数量"></el-table-column>
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
-            <el-button @click="del(scope.$index,scope.row)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
             <el-button @click="modify(scope.$index,scope.row)" type="text" size="mini" icon="el-icon-edit">修改</el-button>
+            <el-button @click="del(scope.$index,scope.row)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -52,8 +52,7 @@
     name: 'Setting',
     data() {
       return {
-        tableData: [
-        ],
+        tableData: this.$store.getters.giftCache,
 
         loading:false,
         randomKey:0,
