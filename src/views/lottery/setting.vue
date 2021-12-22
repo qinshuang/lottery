@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" >
+    <el-form class="setting-form" >
       <div class="title-container">
         <h3 class="title">设置</h3>
       </div>
@@ -146,7 +146,7 @@
     background-color: $bg;
     overflow: hidden;
 
-    .login-form {
+    .setting-form {
       position: relative;
       width: 1000px;
       max-width: 100%;
