@@ -1,24 +1,24 @@
 <template>
-  <div class="login-container">
-    <el-form class="setting-form" >
+  <div class="lottery-setting-container">
+    <el-form class="lottery-setting-form">
       <div class="title-container">
         <h3 class="title">设置</h3>
       </div>
 
       <el-button type="primary" icon="el-icon-edit" @click="add">新增</el-button>
 
-
       <el-table
         :key="randomKey"
         :data="tableData"
         border
-        style="width: 100%">
-        <el-table-column prop="name" label="礼物名称"></el-table-column>
-        <el-table-column prop="count" label="数量"></el-table-column>
+        style="width: 100%"
+      >
+        <el-table-column prop="name" label="礼物名称" />
+        <el-table-column prop="count" label="数量" />
         <el-table-column label="操作" width="200px">
           <template slot-scope="scope">
-            <el-button @click="modify(scope.$index,scope.row)" type="text" size="mini" icon="el-icon-edit">修改</el-button>
-            <el-button @click="del(scope.$index,scope.row)" type="text" size="mini" icon="el-icon-delete">删除</el-button>
+            <el-button type="text" size="mini" icon="el-icon-edit" @click="modify(scope.$index,scope.row)">修改</el-button>
+            <el-button type="text" size="mini" icon="el-icon-delete" @click="del(scope.$index,scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -30,12 +30,12 @@
     </el-form>
 
     <el-dialog :title="dialogTitle" :visible.sync="dialogVisible" :close-on-click-modal="false">
-      <el-form :model="dialogForm" :rules="dialogRules" ref="dialogForm" label-width="80px">
-        <el-form-item label="名称"  prop="name">
-          <el-input v-model="dialogForm.name" autocomplete="off" ></el-input>
+      <el-form ref="dialogForm" :model="dialogForm" :rules="dialogRules" label-width="80px">
+        <el-form-item label="名称" prop="name">
+          <el-input v-model="dialogForm.name" autocomplete="off" />
         </el-form-item>
         <el-form-item label="数量" prop="count">
-          <el-input-number v-model="dialogForm.count" label="数量"></el-input-number>
+          <el-input-number v-model="dialogForm.count" label="数量" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -48,90 +48,90 @@
 </template>
 
 <script>
-  export default {
-    name: 'Setting',
-    data() {
-      return {
-        tableData: this.$store.getters.giftCache,
+export default {
+  name: 'Setting',
+  data() {
+    return {
+      tableData: this.$store.getters.giftCache,
 
-        loading:false,
-        randomKey:0,
-        // 弹框隐藏
-        dialogVisible: false,
-        // 弹框标题
-        dialogTitle: '',
-        dialogForm:{
-          index:null,
-          count:0,
-          name:''
-        },
-        dialogRules:{
-          name:[
-            { required: true, message: '名称不能为空', trigger: 'blur'},
-          ],
-          count:[
-            { required: true, message: '数量不能为空', trigger: 'blur'},
-            {pattern: /^[0-9]*$/, message: '数量需为数字', trigger: 'blur'}
-          ]
-        },
-
+      loading: false,
+      randomKey: 0,
+      // 弹框隐藏
+      dialogVisible: false,
+      // 弹框标题
+      dialogTitle: '',
+      dialogForm: {
+        index: null,
+        count: 0,
+        name: ''
+      },
+      dialogRules: {
+        name: [
+          { required: true, message: '名称不能为空', trigger: 'blur' }
+        ],
+        count: [
+          { required: true, message: '数量不能为空', trigger: 'blur' },
+          { pattern: /^[0-9]*$/, message: '数量需为数字', trigger: 'blur' }
+        ]
       }
+
+    }
+  },
+  methods: {
+    saveCache() {
+      this.$store.dispatch('lottery/initGiftCache', this.tableData)
+      this.$router.push(`/lottery`)
     },
-    methods:{
-      saveCache(){
-        this.$store.dispatch('lottery/initGiftCache',this.tableData);
-        this.$router.push(`/lottery`)
-      },
-      add(){
-        this.dialogTitle="新增"
-        this.dialogVisible= true
-        this.dialogForm={ index:null,count:0,name:''}
-      },
-      del(index,data){
-        let that= this;
-        this.$confirm('是否删除?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          that.tableData.splice(index,1);
-        });
-      },
-      modify(index,data){
-        this.dialogVisible= true
-        this.dialogTitle="修改"
-        this.dialogForm={index:index,count:data.count,name:data.name}
-      },
-      dialogCancel(){
-        this.dialogVisible= false
-      },
-      submitForm(formName){
-          this.$refs[formName].validate((valid) => {
-            if (valid) {
-              this.dialogVisible= false;
-              if (this.dialogForm.index==null) {
-                this.tableData.push({
-                  name: this.dialogForm.name,
-                  count:this.dialogForm.count
-                });
-              }else{
-                this.tableData[this.dialogForm.index]={
-                  name: this.dialogForm.name,
-                  count:this.dialogForm.count
-                }
-              }
-              this.randomKey=Math.random();
-            } else {
-              this.$message({
-                message: '输入错误',
-                type: 'warning'
-              });
-              return false;
+    add() {
+      this.dialogTitle = '新增'
+      this.dialogVisible = true
+      this.dialogForm = { index: null, count: 0, name: '' }
+    },
+    del(index, data) {
+      const that = this
+      this.$confirm('是否删除?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        that.tableData.splice(index, 1)
+      })
+    },
+    modify(index, data) {
+      this.dialogVisible = true
+      this.dialogTitle = '修改'
+      this.dialogForm = { index: index, count: data.count, name: data.name }
+    },
+    dialogCancel() {
+      this.dialogVisible = false
+    },
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          this.dialogVisible = false
+          if (this.dialogForm.index == null) {
+            this.tableData.push({
+              name: this.dialogForm.name,
+              count: this.dialogForm.count
+            })
+          } else {
+            this.tableData[this.dialogForm.index] = {
+              name: this.dialogForm.name,
+              count: this.dialogForm.count
             }
-          });
-      }
+          }
+          this.randomKey = Math.random()
+        } else {
+          this.$message({
+            message: '输入错误',
+            type: 'warning'
+          })
+          return false
+        }
+      })
     }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -140,13 +140,13 @@
   $light_gray: #eee;
   $cursor: #fff;
 
-  .login-container {
+  .lottery-setting-container {
     min-height: 100%;
     width: 100%;
     background-color: $bg;
     overflow: hidden;
 
-    .setting-form {
+    .lottery-setting-form {
       position: relative;
       width: 1000px;
       max-width: 100%;
