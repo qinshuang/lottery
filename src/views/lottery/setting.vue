@@ -134,7 +134,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   $bg: #2d3a4b;
   $dark_gray: #889aa4;
   $light_gray: #eee;
