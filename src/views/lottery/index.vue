@@ -67,7 +67,39 @@
     methods: {
       randomList() {
         // 初始化列表
-        let gifts = this.$store.getters.giftCache,
+        let gifts =  [
+          {name:'小本子一本',count:20},
+          {name:'可擦笔一支',count:15},
+          {name:'便利贴一个',count:20},
+          {name:'沙画(小)一个',count:2},
+          {name:'沙画(中)一个',count:2},
+          {name:'沙画(大)一个',count:2},
+          {name:'中性笔一支',count:20},
+          {name:'荧光笔一支',count:5},
+          {name:'零食一袋',count:15},
+          {name:'饼干一袋 ',count:25},
+          {name:'棒棒糖一个',count:20},
+          {name:'盲盒一个',count:2},
+          {name:'削笔刀一个',count:3},
+          {name:'七巧板一个',count:1},
+          {name:'水机一个',count:1},
+          {name:'投篮机一个',count:2},
+          {name:'彩色蛋一个',count:4},
+          {name:'手绘提包一个',count:18},
+          {name:'笔袋一个',count:1},
+          {name:'十色笔一支',count:5},
+          {name:'流沙本一个',count:2},
+          {name:'环扣本一个',count:4},
+          {name:'钢笔一个',count:1},
+          {name:'辣条一个',count:6},
+          {name:'星球杯一个',count:10},
+          {name:'看电影一次',count:1},
+          {name:'免做计算能手一次',count:10},
+          {name:'徽章一个',count:4},
+          {name:'橡皮一个',count:6},
+        ],
+
+            // this.$store.getters.giftCache,
           temp = []
         gifts.forEach((item) => {
           for (let i = 0; i < item.count; i++) {
