@@ -107,6 +107,7 @@
           }
         })
         this.randomGifts = this.shuffleArray(temp)
+
       },
       shuffleArray(array) {
         for (var i = array.length - 1; i > 0; i--) {
@@ -124,6 +125,7 @@
       },
       userGetGift(index) {
         this.randomGifts.splice(index, 1)
+        console.log("礼物数量",this.randomGifts.length);
       },
       startCallback(){
 
